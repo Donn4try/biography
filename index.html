@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heart V2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: url('https://i.ibb.co/zVhjnK0x/a4d00623-3a68-4b9b-ae87-dd9014eb9349.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-overlay {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 330px;
+      text-align: center;
+      transition: all 0.6s ease;
+      position: relative;
+    }
+
+    .glitch-transition {
+      animation: glitch 0.5s;
+    }
+
+    @keyframes glitch {
+      0% { filter: blur(0); transform: translate(0, 0); }
+      20% { filter: blur(2px); transform: translate(-2px, 1px); }
+      40% { filter: blur(3px); transform: translate(2px, -1px); }
+      60% { filter: blur(1px); transform: translate(-1px, 2px); }
+      80% { filter: blur(2px); transform: translate(1px, -2px); }
+      100% { filter: blur(0); transform: translate(0, 0); }
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 35px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .menu-button span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: url('https://i.ibb.co/MDvPDJ8W/donn.png') center/cover;
+      margin: 0 auto 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
+
+    .username {
+      color: white;
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .social-button {
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      border-radius: 50%;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: all 0.4s ease;
+    }
+
+    .social-button span {
+      display: none;
+      margin-left: 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .social-button.active {
+      width: 130px;
+      border-radius: 25px;
+      background: white;
+      color: black;
+      justify-content: center;
+      box-shadow: 0 0 15px 5px rgba(255,255,255,0.3);
+    }
+
+    .social-button.active i {
+      display: none;
+    }
+
+    .social-button.active span {
+      display: inline;
+    }
+
+    .social-button.minimized {
+      transform: scale(0.7);
+      opacity: 0.4;
+    }
+
+    .music-player {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+
+    .music-player.active {
+      display: flex;
+    }
+
+    .music-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0;
+    }
+
+    .control-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .control-btn:hover {
+      background: white;
+      color: black;
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .slider {
+      width: 100%;
+      height: 5px;
+      background: white;
+      border-radius: 5px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      -webkit-appearance: none;
+    }
+
+    .slider:hover {
+      box-shadow: 0 0 10px white;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      box-shadow: 0 0 8px white;
+      transition: transform 0.3s ease;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      box-shadow: 0 0 8px white;
+    }
+
+    .cover-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-overlay" id="overlay">
+    <div class="menu-button" onclick="toggleMusicPlayer(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="profile-content" id="profileContent">
+      <div class="profile-pic"></div>
+      <div class="username">Mas Donn</div>
+      <div class="social-buttons">
+        <div class="social-button" id="github" onclick="handleSocialClick(event, 'github', 'https://github.com/Donn4try')">
+          <i class="fab fa-github"></i><span>GitHub</span>
+        </div>
+        <div class="social-button" id="instagram" onclick="handleSocialClick(event, 'instagram', 'https://www.instagram.com/donn.4try?igsh=MXE0eXRrZ2FjYXM0Nw==')">
+          <i class="fab fa-instagram"></i><span>Instagram</span>
+        </div>
+        <div class="social-button" id="youtube" onclick="handleSocialClick(event, 'youtube', 'https://youtube.com/@its.melucy?si=XZ38PSJjlbEO9a3A')">
+          <i class="fab fa-youtube"></i><span>YouTube</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="music-player" id="musicPlayer">
+      <img id="trackCover" class="cover-image" src="" alt="Cover Lagu">
+      <div class="music-title" id="trackTitle">Judul Musik</div>
+      <div class="controls">
+        <div class="control-btn" onclick="prevTrack()"><i class="fas fa-backward"></i></div>
+        <div class="control-btn" onclick="togglePlay()" id="playPauseBtn"><i class="fas fa-play"></i></div>
+        <div class="control-btn" onclick="nextTrack()"><i class="fas fa-forward"></i></div>
+      </div>
+      <input type="range" class="slider" id="progressSlider" value="0" min="0" max="100">
+    </div>
+  </div>
+
+  <audio id="audioPlayer" src=""></audio>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const profileContent = document.getElementById("profileContent");
+    const musicPlayer = document.getElementById("musicPlayer");
+    const audio = document.getElementById("audioPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const trackTitle = document.getElementById("trackTitle");
+    const slider = document.getElementById("progressSlider");
+    const trackCover = document.getElementById("trackCover");
+
+    const tracks = [
+      {
+        title: "i pray to god i die every night Gloom East",
+        url: "https://l.top4top.io/m_34804thot0.mp3",
+        cover: "https://i.ibb.co/MkyVrqgj/724x724-000000-80-0-0.webp"
+      },
+      {
+        title: "Line Without a Hook Cover - Rick Montgomery",
+        url: "https://i.top4top.io/m_3480ivc1c0.mp3",
+        cover: "https://i.ibb.co/Z17gBvV7/724x724-000000-80-0-0-1.webp"
+      }
+    ];
+
+    let currentTrack = 0;
+
+    function toggleMusicPlayer(button) {
+      overlay.classList.add("glitch-transition");
+      setTimeout(() => {
+        overlay.classList.remove("glitch-transition");
+      }, 400);
+
+      const isActive = musicPlayer.classList.contains("active");
+      musicPlayer.classList.toggle("active", !isActive);
+      profileContent.style.display = isActive ? "block" : "none";
+
+      if (!isActive) {
+        loadTrack(currentTrack);
+        audio.play();
+        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+      } else {
+        audio.pause();
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
+      }
+    }
+
+    function loadTrack(index) {
+      const track = tracks[index];
+      audio.src = track.url;
+      trackTitle.textContent = track.title;
+      trackCover.src = track.cover;
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+      } else {
+        audio.pause();
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
+      }
+    }
+
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+      playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+    }
+
+    function prevTrack() {
+      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+      playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+    }
+
+    audio.ontimeupdate = () => {
+      if (!isNaN(audio.duration)) {
+        slider.value = (audio.currentTime / audio.duration) * 100;
+      }
+    };
+
+    slider.oninput = () => {
+      audio.currentTime = (slider.value / 100) * audio.duration;
+    };
+
+    let clickedSocial = null;
+    function handleSocialClick(event, id, url) {
+      event.stopPropagation();
+      const btn = document.getElementById(id);
+
+      if (btn.classList.contains('active')) {
+        window.open(url, '_blank');
+        return;
+      }
+
+      clickedSocial = id;
+      const buttons = document.querySelectorAll('.social-button');
+      buttons.forEach(b => b.classList.remove('active', 'minimized'));
+
+      btn.classList.add('active');
+      buttons.forEach(b => {
+        if (b.id !== id) b.classList.add('minimized');
+      });
+    }
+
+    document.body.addEventListener('click', function (e) {
+      if (!e.target.closest('.social-button')) {
+        const buttons = document.querySelectorAll('.social-button');
+        buttons.forEach(b => b.classList.remove('active', 'minimized'));
+        clickedSocial = null;
+      }
+    });
+  </script>
+</body>
+</html>
